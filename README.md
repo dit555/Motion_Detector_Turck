@@ -15,7 +15,7 @@ Attached enc.csv file is the information from the wheel encoder.  Time is the fi
 
 ## Thought Process 
   
-Since 10,000 ticks is one full rotation, we can calculate how much distance one tick is (pi * tire_diameter) / 10,000. If we consider the car is moving when it is going 0.5 m/s then in the time span of one second there must be at least 2506 ticks. Using this we can separate the data into 1 second segments and find out how many ticks have been added. if more than 2506 ticks have been added, then we know that in 1 second the car has moved 0.5 meters. Increasing the speed threshold and size of segments will decrease the effect of noise, as it becomes a less significant part of the data.  
+Since 10,000 ticks is one full rotation, we can calculate how much distance one tick moves the car is (pi * tire_diameter) / 10,000. If we consider the car is moving when it is going 0.5 m/s then in the time span of one second there must be at least 2506 ticks. Using this we can separate the data into 1 second segments and find out how many ticks have been added. if more than 2506 ticks have been added, then we know that in 1 second the car has moved 0.5 meters. Increasing the speed threshold and size of segments will decrease the effect of noise, as it becomes a less significant part of the data.  
   
 ### Other considerations:  
 Since we are reading the document in segments, using multithreading is an option to process the data much faster, at the cost of more memory.
