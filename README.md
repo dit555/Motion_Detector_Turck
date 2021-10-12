@@ -1,1 +1,51 @@
-# Motion_Detector_Turck
+# Motion_Detector_Turk
+## Contents  
+- [How to Use](#How-to-Use)
+- [Task Description](#Task-Description)
+- [Though Process](#Though-Process)
+- [Description of Files](#Description-of-Files)
+
+## How to Use
+clone this project with: `git clone https://github.com/dit555/Motion_Detector.git`  
+run `make` to compile project  
+to run the project: `./detector.out <input.csv name> <output.csv name>`
+
+## Task Description
+Attached enc.csv file is the information from the wheel encoder.  Time is the first column, measurements is third column. This is a Turk absolute encoder, attached to the rear vehicle wheel, which outputs 10000 counts per wheel rotation. (in other words, when wheel rotates on 360 degrees, encoder output will change on 10000).  At least first 20 seconds of the data set is a static period, and at least last 10 seconds is also static period. There are some static periods in the middle of the trajectory. Can you catch them with your software? 
+
+## Thought Process 
+  
+Since 10,000 ticks is one full rotation, we can calculate how much distance one tick is (pi * tire_diameter) / 10,000. If we consider the car is moving when it is going 0.5 m/s then in the time span of one second there must be at least 2506 ticks. Using this we can separate the data into 1 second segments and find out how many ticks have been added. if more than 2506 ticks have been added, then we know that in 1 second the car has moved 0.5 meters. Increasing the speed threshold and size of segments will decrease the effect of noise, as it becomes a less significant part of the data.  
+  
+### Other considerations:  
+Since we are reading the document in segments, using multithreading is an option to process the data much faster, at the cost of more memory.
+
+
+## Description of files  
+### emc.csv:   
+* contains the data from the imu
+
+### output.csv
+* csv with columns: timestamp, motion flag
+* timestamp is the timestamp form emc.csv
+* motion flag is 0 when car is moving, 1 when it is not moving
+
+### Makefile
+* `make` or `make compile`: compiles the project as normal
+* `make run`: compiles the project and runs with imu.csv as input and output.csv as output 
+* `make clean`: removes \*.out files
+
+### header/structs.hpp:
+* contains a row of data read from the csv file
+
+### header/Car.hpp and src/Car.cpp:
+* `std::string input_file_path, std::string output_file_path)`: constructor for car class, takes the file path for the input csv, and open the input and output files
+* `struct data tokenize_line()`: reads a line from the csv and sparates the values into a data struct
+* `int is_moving(float ticks_moved)`: returns the moving code if moving or not.
+* `void write_to_output(float time, int flag)`: writes to the output csv
+* `void run_moving()`: s
+  * reads file in segments of 10 nd devides if the car is moving or not
+* `~Car`: the destructor for car class, closes both files.
+
+### src/detector.cpp:
+* contains the main that runs the program
