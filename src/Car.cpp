@@ -6,10 +6,10 @@
 #include "../header/structs.hpp"
 
 //constants
-const float distance_tolerance = 1; //minimum distance in one second to be considered moving
+const float distance_tolerance = 0.5; //minimum distance in one second to be considered moving
 const float tire_diameter = 0.635; //the radius (meters) of the tires on a 2001 Honda accord (my car). 
 const float turk_tick_full_rotation = 10000; //ticks to full rotation
-const int ticks_per_second = 100; //time turk takes to update in seconds
+const int ticks_per_second = 200; //time turk takes to update in seconds
 
 const int car_is_moving = 0;
 const int car_not_moving = 1;
@@ -118,7 +118,7 @@ float Car::calc_ticks_moved(struct data* data_segment, const int size){
 		eof_flag = 2;
 		std::cout << "car is moving too fast on lines: " << read_line_num - size << " - " << read_line_num << std::endl;
 	}
-	return -moved; //data is negative
+	return -moved; //data is negative, convert to positive
 }
 
 void Car::run_moving(){
@@ -135,7 +135,7 @@ void Car::run_moving(){
 		}
 
 		ticks_moved = calc_ticks_moved(data_segment, ticks_per_second);
-
+		
 		//write segment to file
 		moving_flag = is_moving(ticks_moved);
 		
