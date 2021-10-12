@@ -27,8 +27,8 @@ Car::Car(std::string input_file_path, std::string output_file_path){
 	//calculate tick threshold
 	float distance_per_tick = 3.14159 * tire_diameter; // circumfrence of tire pi * diameter
 	distance_per_tick /= turk_tick_full_rotation; // find distance per tick 
-	tick_threshold = distance_tolerance / distance_per_tick; //distance covered ot be considered moving in ticks	
-	
+	tick_min_threshold = distance_tolerance / distance_per_tick; //distance covered ot be considered moving in ticks	
+	tick_max_threshold = distance_tolerance_too_fast / distance_per_tick;
 }
 
 struct data Car::tokenize_line(){
@@ -84,8 +84,9 @@ struct data Car::tokenize_line(){
 }
 
 int Car::is_moving(float ticks_moved){
+	
 
-	int moving_flag = (ticks_moved >= tick_threshold); 
+	bool moving_flag = (ticks_moved >= tick_min_threshold); 
 	if(moving_flag){
 		return car_is_moving;
 	}
@@ -108,6 +109,13 @@ float Car::calc_ticks_moved(struct data* data_segment, const int size){
 	float moved = 0;
 	for (int i = 1; i < size ; i++){
 		moved += data_segment[i].turk_value - data_segment[i - 1].turk_value; 
+	}
+	
+	//error checking in data
+	bool too_fast = (moved >= tick_max_threshold);
+	if (too_fast){
+		eof_flag = 2;
+		std::cout << "car is moving too fast on lines: " << read_line_num - size << " - " << read_line_num << std::endl;
 	}
 	return -moved; //data is negative
 }

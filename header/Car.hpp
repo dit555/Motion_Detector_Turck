@@ -25,9 +25,9 @@ private:
 	std::ifstream car_data_file; //stores opened file
 	std::ofstream car_output_file; //stores new csv file
 	int read_line_num; //line that is currently being read
-	int eof_flag; //end of file flag
-	float tick_threshold; //minimum ticks to be considered moving
-
+	int eof_flag; //end of file flag, 1 if exit normally, 2 if early exit
+	float tick_min_threshold; //minimum ticks to be considered moving
+	float tick_max_threshold; //moving to fast to be real data 
 };
 
 #endif
