@@ -37,9 +37,9 @@ To make sure that the input csv has valid data the program checks:
 2. rach row only contains numbers and the characters `,` `.` `e` `-`
   
 To make sure that the data is valid:
-1. each segment is check to see if its total change in ticks is less than the maximum speed tolerance. Currently the tolerance is set to 150 mph or 67 m/s  
+1. Each segment is check to see if its total change in ticks is less than the maximum speed tolerance. Currently the tolerance is set to 150 mph or 67 m/s  
 
-if any of these errors are detected, the program will stop running immediatly and will print out the appropriate error message and line number(s).
+If any of these errors are detected, the program will stop running immediatly and will print out the appropriate error message and line number(s).
   
 ### Other considerations:  
 Multithreading: Since we are reading the document in segments, using multithreading is an option to process the data much faster, at the cost of more memory. I chose not to explore this option as I can not test it on my linux virtual machine, as it only has one thread. As a result, I would not be able to adequately test the speed improvments.
