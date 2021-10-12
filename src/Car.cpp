@@ -6,7 +6,7 @@
 #include "../header/structs.hpp"
 
 //constants
-const float distance_tolerance = 0.5; //minimum distance in one second to be considered moving
+const float distance_tolerance = 1; //minimum distance in one second to be considered moving
 const float tire_diameter = 0.635; //the radius (meters) of the tires on a 2001 Honda accord (my car). 
 const float turk_tick_full_rotation = 10000; //ticks to full rotation
 const int ticks_per_second = 100; //time turk takes to update in seconds
@@ -45,11 +45,12 @@ struct data Car::tokenize_line(){
 
 			for (int i = 0; i < line.length(); i++){
 				char cur = line[i];
-				if (cur == ','){
-					comma_count++;
-				}
-				else if (cur >= (int)'0' && line[i] <= (int)'9'){
+				
+				if (cur >= (int)'0' && line[i] <= (int)'9'){
 					number_count++;
+				}
+				else if (cur == ','){
+					comma_count++;
 				}
 				else if(cur == '.' || cur == '-' || cur == 'e'){
 					special_count++;
