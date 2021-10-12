@@ -11,6 +11,9 @@ const float tire_diameter = 0.635; //the radius (meters) of the tires on a 2001 
 const float turk_tick_full_rotation = 10000; //ticks to full rotation
 const int ticks_per_second = 100; //time turk takes to update in seconds
 
+const int car_is_moving = 0;
+const int car_not_moving = 1;
+
 
 Car::Car(std::string input_file_path, std::string output_file_path){
 	car_data_file.open(input_file_path, std::ifstream::in);
@@ -53,10 +56,10 @@ int Car::is_moving(float ticks_moved){
 
 	int moving_flag = (ticks_moved >= tick_threshold); 
 	if(moving_flag){
-		return 0; //moving
+		return car_is_moving;
 	}
 	else{
-		return 1; //not moving
+		return car_not_moving;
 	}
 }
 
