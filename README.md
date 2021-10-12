@@ -15,10 +15,34 @@ Attached enc.csv file is the information from the wheel encoder.  Time is the fi
 
 ## Thought Process 
   
-Since 10,000 ticks is one full rotation, we can calculate how much distance one tick moves the car is (pi * tire_diameter) / 10,000. If we consider the car is moving when it is going 0.5 m/s then in the time span of one second there must be at least 2506 ticks. Using this we can separate the data into 1 second segments and find out how many ticks have been added. if more than 2506 ticks have been added, then we know that in 1 second the car has moved 0.5 meters. Increasing the speed threshold and size of segments will decrease the effect of noise, as it becomes a less significant part of the data.  
+Since 10,000 ticks is one full rotation, we can calculate how much distance one tick moves the car is (pi * tire_diameter) / 10,000. If we consider the car is moving when it is going 0.5 m/s then in the time span of one second there must be at least 2506 ticks. Using this we can separate the data into 1 second segments and find out how many ticks have been added. if more than 2506 ticks have been added, then we know that in 1 second the car has moved 0.5 meters. Increasing the speed threshold and size of segments will decrease the effect of noise, as it becomes a less significant part of the data. 
+
+### Results:
+We define flips as the moving flag shifting to 1 or 0 from its previous value in the output file. When changing the minimum speed tolerance in src/Car.cpp I noticed that there were less flips in the data when the minimum speed tolerance is increased. For example, these are the graphs of the output file flags vs their row in the csv:  
+<img src="https://user-images.githubusercontent.com/56750709/137031522-11b4190f-59be-44f2-ab4b-41b886afe307.png" width=300>
+<img src="https://user-images.githubusercontent.com/56750709/137031535-0922a920-9397-49c0-b9cc-365378935036.png" width=300>  
+
+As we can see, the graph with tolerance of 1 m/s (right) has less flips than the graph with 0.5 m/s tolerance (left).    
+  
+
+<img src="https://user-images.githubusercontent.com/56750709/137033862-a82688eb-08bd-44f0-a21f-e30e475a8e97.png" width=300>  
+
+Above we see a graph of ticks/second vs segment (1s). *Note: increasing segment size to 2s or 3s did not make a visible difference to the appearance of the graph. From this we can conclude that increasing or decreasing the size of segments does not create a significant change in the way the data appears without going to extremes.*    
+
+In the above ticks/s vs segment graph we notice that every value that is above 2506 ticks/s is considered a 0 on the output file graph with 0.5 m tolerance. In addition, every value that is above 5012 ticks/s is considered a 0 on the output file graph with 1 m tolerance.
+
+### Error Checking
+To make sure that the input csv has valid data the program checks:
+1. Each row of input csv contains 3 columns separated by 2 commas.
+2. rach row only contains numbers and the characters `,` `.` `e` `-`
+  
+To make sure that the data is valid:
+1. each segment is check to see if its total change in ticks is less than the maximum speed tolerance. Currently the tolerance is set to 150 mph or 67 m/s  
+
+if any of these errors are detected, the program will stop running immediatly and will print out the appropriate error message and line number(s).
   
 ### Other considerations:  
-Since we are reading the document in segments, using multithreading is an option to process the data much faster, at the cost of more memory.
+Multithreading: Since we are reading the document in segments, using multithreading is an option to process the data much faster, at the cost of more memory. I chose not to explore this option as I can not test it on my linux virtual machine, as it only has one thread. As a result, I would not be able to adequately test the speed improvments.
 
 
 ## Description of files  
