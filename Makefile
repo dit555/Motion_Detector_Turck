@@ -1,13 +1,13 @@
 compile:
 	@echo "Compiling..."
-	@g++ -o detector.out src/detector.cpp src/Car.cpp src/data_math.cpp
+	@g++ -o detector.out src/detector.cpp src/Car.cpp
 	@echo "finished!"
 
 run:
 	@echo "Compiling..."
-	@g++ -o detector.out src/detector.cpp src/Car.cpp src/data_math.cpp
+	@g++ -o detector.out src/detector.cpp src/Car.cpp
 	@echo "finished!"
-	./detector.out imu.csv output.csv
+	./detector.out enc.csv output.csv
 
 
 clean:
