@@ -40,7 +40,7 @@ struct data Car::tokenize_line(){
 			//validate line from csv
 			int number_count = 0;
 			int comma_count = 0;
-			int special_count = 0; //'.' ',' '-' and 'e' 
+			int special_count = 0; //'.' '-' and 'e' 
 			read_line_num++;
 
 			for (int i = 0; i < line.length(); i++){
@@ -51,7 +51,7 @@ struct data Car::tokenize_line(){
 				else if (cur >= (int)'0' && line[i] <= (int)'9'){
 					number_count++;
 				}
-				else if(cur == '.' || cur == ',' || cur == '-' || cur == 'e'){
+				else if(cur == '.' || cur == '-' || cur == 'e'){
 					special_count++;
 				}
 			}
