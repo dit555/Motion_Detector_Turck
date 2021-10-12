@@ -41,6 +41,13 @@ To make sure that the data is valid:
 
 If any of these errors are detected, the program will stop running immediatly and will print out the appropriate error message and line number(s).
   
+### Testing:
+When running `make tests` test/test.cpp is compiled as the main and it tests `tokenize line()`, `calc_ticks_moved(...)`, and `is_moving(...)`  
+after running the tests it prints a bright green success or a bright red failure with the expected value and recieved value. Sample output:  
+<img src="https://user-images.githubusercontent.com/56750709/137043231-3675fe88-5e4f-4075-ad47-8a4b6e118c6b.jpg" width=500>
+
+
+
 ### Other considerations:  
 Multithreading: Since we are reading the document in segments, using multithreading is an option to process the data much faster, at the cost of more memory. I chose not to explore this option as I can not test it on my linux virtual machine, as it only has one thread. As a result, I would not be able to adequately test the speed improvments.
 
@@ -57,7 +64,8 @@ Multithreading: Since we are reading the document in segments, using multithread
 ### Makefile
 * `make` or `make compile`: compiles the project as normal
 * `make run`: compiles the project and runs with imu.csv as input and output.csv as output 
-* `make clean`: removes \*.out files
+* `make tests`: compiles and runs using test/test.cpp
+*  `make clean`: removes \*.out files
 
 ### header/structs.hpp:
 * contains a row of data read from the csv file
@@ -73,3 +81,12 @@ Multithreading: Since we are reading the document in segments, using multithread
 
 ### src/detector.cpp:
 * contains the main that runs the program
+
+### test/test.cpp:
+* runs the main for tests
+
+### test/enc_gen.py:
+* really quick way to generate an enc file for testing
+
+### test/enc.csv
+* a csv file for testing puroses
