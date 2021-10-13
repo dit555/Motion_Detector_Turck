@@ -56,17 +56,17 @@ Multithreading: Since we are reading the document in segments, using multithread
 
 
 ## Description of files  
-### emc.csv:   
-* contains the data from the imu
+### enc.csv:   
+* contains the data from the turk encoder
 
 ### output.csv
 * csv with columns: timestamp, motion flag
-* timestamp is the timestamp form emc.csv
+* timestamp is the timestamp form enc.csv
 * motion flag is 0 when car is moving, 1 when it is not moving
 
 ### Makefile
 * `make` or `make compile`: compiles the project as normal
-* `make run`: compiles the project and runs with imu.csv as input and output.csv as output 
+* `make run`: compiles the project and runs with enc.csv as input and output.csv as output 
 * `make tests`: compiles and runs using test/test.cpp
 *  `make clean`: removes \*.out files
 
