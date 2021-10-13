@@ -9,6 +9,9 @@
 clone this project with: `git clone https://github.com/dit555/Motion_Detector.git`  
 run `make` to compile project  
 to run the project: `./detector.out <input.csv name> <output.csv name>`
+or:  
+`make run` to compile and run with default inputs
+`make tests` to compile and run unit tests
 
 ## Task Description
 Attached enc.csv file is the information from the wheel encoder.  Time is the first column, measurements is third column. This is a Turk absolute encoder, attached to the rear vehicle wheel, which outputs 10000 counts per wheel rotation. (in other words, when wheel rotates on 360 degrees, encoder output will change on 10000).  At least first 20 seconds of the data set is a static period, and at least last 10 seconds is also static period. There are some static periods in the middle of the trajectory. Can you catch them with your software? 
